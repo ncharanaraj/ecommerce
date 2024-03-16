@@ -1,11 +1,13 @@
 import React from "react";
 import Header from "./components/Header";
+import PromoHeader from "./components/PromoHeader";
 
 const App = () => {
   return (
     <>
-      <header className="w-full h-[100px] px-10">
+      <header>
         <Header />
+        <PromoHeader />
       </header>
       <main></main>
     </>
