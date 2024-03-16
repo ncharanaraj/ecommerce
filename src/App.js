@@ -1,6 +1,7 @@
 import React from "react";
 import Header from "./components/Header";
 import PromoHeader from "./components/PromoHeader";
+import Form from "./components/Form";
 
 const App = () => {
   return (
@@ -9,7 +10,9 @@ const App = () => {
         <Header />
         <PromoHeader />
       </header>
-      <main></main>
+      <main className="flex justify-center">
+        <Form />
+      </main>
     </>
   );
 };
