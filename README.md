@@ -10,3 +10,4 @@ What if I am purely applying for a frontend role? You can mock the API responses
 
 - React
 - TailwindCSS
+- lucide Icons

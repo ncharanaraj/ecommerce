@@ -1,7 +1,15 @@
 import React from "react";
+import Header from "./components/Header";
 
 const App = () => {
-  return <div className="text-3xl font-bold underline">App</div>;
+  return (
+    <>
+      <header className="w-full h-[100px] px-10">
+        <Header />
+      </header>
+      <main></main>
+    </>
+  );
 };
 
 export default App;
