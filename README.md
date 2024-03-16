@@ -7,3 +7,6 @@ App hosting: We recommend hosting your app on vercel’s free tier- https://verc
 What if I am purely applying for a frontend role? You can mock the API responses and skip database design and database creation part. You still must create dummy APIs and return mock data from them for your frontend app to consume. -->
 
 # ECOMMERCE
+
+- React
+- TailwindCSS
