@@ -15,6 +15,7 @@ const Categories = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
   const categoriesPerPage = 6;
+  const numberOfPages = Math.ceil(productCategories.length / categoriesPerPage);
   const indexOfLastCategory = currentPage * categoriesPerPage;
   const indexOfFirstCategory = indexOfLastCategory - categoriesPerPage;
   const currentCategories = productCategories.slice(
@@ -22,7 +23,14 @@ const Categories = () => {
     indexOfLastCategory
   );
 
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  const paginate = (pageNumber) => {
+    if (
+      pageNumber >= 1 &&
+      pageNumber <= numberOfPages &&
+      pageNumber !== currentPage
+    )
+      setCurrentPage(pageNumber);
+  };
 
   return (
     <fieldset className="w-full">
@@ -45,23 +53,28 @@ const Categories = () => {
         </div>
       ))}
 
-      <div className="text-[#ACACAC] leading-[26px] text-xl font-medium flex my-10 justify-center items-center gap-2">
-        <ChevronsLeft />
-        <ChevronLeft />
-        {[
-          ...Array(Math.ceil(productCategories.length / categoriesPerPage)),
-        ].map((_, i) => (
+      <div className="text-[#ACACAC] leading-[26px] text-xl font-medium flex my-10 justify-center items-center gap-2 cursor-pointer">
+        {currentPage !== 1 && (
+          <>
+            <ChevronsLeft onClick={() => paginate(1)} />
+            <ChevronLeft onClick={() => paginate(currentPage - 1)} />{" "}
+          </>
+        )}
+        {[...Array(numberOfPages)].map((_, i) => (
           <span
             key={i}
-            className="cursor-pointer"
+            className={currentPage === i + 1 ? "text-black" : ""}
             onClick={() => paginate(i + 1)}
           >
             {i + 1}
           </span>
         ))}
-
-        <ChevronRight />
-        <ChevronsRight />
+        {currentPage !== numberOfPages && (
+          <>
+            <ChevronRight onClick={() => paginate(currentPage + 1)} />
+            <ChevronsRight onClick={() => paginate(numberOfPages)} />
+          </>
+        )}
       </div>
     </fieldset>
   );
