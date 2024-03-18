@@ -1,8 +1,10 @@
 import React, { useState } from "react";
-import Button from "./Button";
+import Button from "../components/Button";
+import { useNavigate } from "react-router-dom";
 
 const Form = () => {
   const [isLoginForm, setIsLoginForm] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <>
@@ -24,6 +26,7 @@ const Form = () => {
         onSubmit={(e) => {
           e.preventDefault();
           console.log("form");
+          navigate("/verify");
         }}
       >
         {!isLoginForm && (
