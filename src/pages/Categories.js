@@ -4,9 +4,26 @@ import {
   ChevronsLeft,
   ChevronsRight,
 } from "lucide-react";
-import React from "react";
+import React, { useState } from "react";
+import { faker } from "@faker-js/faker";
 
 const Categories = () => {
+  const productCategories = Array.from({ length: 100 }, () => ({
+    id: faker.string.uuid(),
+    name: faker.commerce.department(),
+  }));
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const categoriesPerPage = 6;
+  const indexOfLastCategory = currentPage * categoriesPerPage;
+  const indexOfFirstCategory = indexOfLastCategory - categoriesPerPage;
+  const currentCategories = productCategories.slice(
+    indexOfFirstCategory,
+    indexOfLastCategory
+  );
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
   return (
     <fieldset className="w-full">
       <legend className="leading-[38.73px] text-[32px] font-semibold text-center pt-6 mb-3">
@@ -18,67 +35,31 @@ const Categories = () => {
       <p className="leading-[26px] text-xl font-medium my-[14px]">
         My saved interests!
       </p>
-      <div className="flex gap-2 items-center my-3">
-        <input
-          type="checkbox"
-          className="w-6 h-6 rounded accent-black bg-[#CCCCCC] "
-        />
-        <label className="leading-[26px] font-normal text-base">Shoes</label>
-      </div>
-      <div className="flex gap-2 items-center my-3">
-        <input
-          type="checkbox"
-          className="w-6 h-6 rounded accent-black bg-[#CCCCCC] "
-        />
-        <label className="leading-[26px] font-normal text-base">
-          Men T-shirts
-        </label>
-      </div>
-      <div className="flex gap-2 items-center my-3">
-        <input
-          type="checkbox"
-          className="w-6 h-6 rounded accent-black bg-[#CCCCCC] "
-        />
-        <label className="leading-[26px] font-normal text-base">Makeup</label>
-      </div>
-      <div className="flex gap-2 items-center my-3">
-        <input
-          type="checkbox"
-          className="w-6 h-6 rounded  bg-[#CCCCCC] accent-black"
-        />
-        <label className="leading-[26px] font-normal text-base">
-          Jewellery
-        </label>
-      </div>
-      <div className="flex gap-2 items-center my-3">
-        <input
-          type="checkbox"
-          className="w-6 h-6 rounded accent-black bg-[#CCCCCC] "
-        />
-        <label className="leading-[26px] font-normal text-base">
-          Women T-shirts
-        </label>
-      </div>
-      <div className="flex gap-2 items-center my-3">
-        <input
-          type="checkbox"
-          className="w-6 h-6 rounded  bg-[#CCCCCC] accent-black"
-        />
-        <label className="leading-[26px] font-normal text-base">
-          Furniture
-        </label>
-      </div>
+      {currentCategories.map(({ id, name }) => (
+        <div key={id} className="flex gap-2 items-center my-3">
+          <input
+            type="checkbox"
+            className="w-6 h-6 rounded accent-black bg-[#CCCCCC] "
+          />
+          <label className="leading-[26px] font-normal text-base">{name}</label>
+        </div>
+      ))}
+
       <div className="text-[#ACACAC] leading-[26px] text-xl font-medium flex my-10 justify-center items-center gap-2">
         <ChevronsLeft />
         <ChevronLeft />
-        <div>1</div>
-        <div>2</div>
-        <div>3</div>
-        <div>4</div>
-        <div>5</div>
-        <div>6</div>
-        <div>7</div>
-        <div>...</div>
+        {[
+          ...Array(Math.ceil(productCategories.length / categoriesPerPage)),
+        ].map((_, i) => (
+          <span
+            key={i}
+            className="cursor-pointer"
+            onClick={() => paginate(i + 1)}
+          >
+            {i + 1}
+          </span>
+        ))}
+
         <ChevronRight />
         <ChevronsRight />
       </div>
