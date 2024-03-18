@@ -5,14 +5,9 @@ import {
   ChevronsRight,
 } from "lucide-react";
 import React, { useState } from "react";
-import { faker } from "@faker-js/faker";
+import { productCategories } from "../utils/productCategories";
 
 const Categories = () => {
-  const productCategories = Array.from({ length: 100 }, () => ({
-    id: faker.string.uuid(),
-    name: faker.commerce.department(),
-  }));
-
   const [currentPage, setCurrentPage] = useState(1);
   const categoriesPerPage = 6;
   const numberOfPages = Math.ceil(productCategories.length / categoriesPerPage);
