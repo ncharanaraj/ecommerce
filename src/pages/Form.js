@@ -1,10 +1,35 @@
-import React, { useState } from "react";
+import React from "react";
 import Button from "../components/Button";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/authContext";
 
 const Form = () => {
-  const [isLoginForm, setIsLoginForm] = useState(false);
+  const { isLoginForm, setIsLoginForm, formData, setFormData, setUsers } =
+    useAuth();
   const navigate = useNavigate();
+
+  const { fullName, email, password } = formData;
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    try {
+      setUsers(formData);
+      navigate("/verify");
+      setTimeout(() => {
+        alert("OTP to login - 12345678");
+      }, 2000);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <>
@@ -23,11 +48,7 @@ const Form = () => {
       )}
       <form
         className="flex flex-col items-center justify-center"
-        onSubmit={(e) => {
-          e.preventDefault();
-          console.log("form");
-          navigate("/verify");
-        }}
+        onSubmit={handleSubmit}
       >
         {!isLoginForm && (
           <label className="my-4">
@@ -35,6 +56,9 @@ const Form = () => {
             <input
               type="text"
               placeholder="Name"
+              name="fullName"
+              value={fullName}
+              onChange={handleChange}
               className="w-[456px] h-12 border rounded-md p-4 mt-[7px]"
             />
           </label>
@@ -44,6 +68,9 @@ const Form = () => {
           <input
             type="email"
             placeholder="email"
+            name="email"
+            value={email}
+            onChange={handleChange}
             className="w-[456px] h-12 border rounded-md p-4 mt-[7px]"
           />
         </label>
@@ -52,6 +79,9 @@ const Form = () => {
           <input
             type="password"
             placeholder="Password"
+            name="password"
+            value={password}
+            onChange={handleChange}
             className="w-[456px] h-12 border rounded-md p-4 mt-[7px]"
           />
         </label>

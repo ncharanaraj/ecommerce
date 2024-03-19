@@ -2,10 +2,11 @@ import React from "react";
 import Header from "./components/Header";
 import PromoHeader from "./components/PromoHeader";
 import { Outlet } from "react-router-dom";
+import { AuthProvider } from "./context/authContext";
 
 const App = () => {
   return (
-    <>
+    <AuthProvider>
       <header>
         <Header />
         <PromoHeader />
@@ -15,7 +16,7 @@ const App = () => {
           <Outlet />
         </div>
       </main>
-    </>
+    </AuthProvider>
   );
 };
 
